@@ -1,14 +1,31 @@
 import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
 import { getUserId } from '@/lib/auth';
+import { PerformanceEvaluation } from '@/types';
 import PerformancePageClient from '@/components/performance/PerformancePageClient';
 
-async function getEvaluations() {
+async function getEvaluations(): Promise<PerformanceEvaluation[]> {
   const userId = getUserId();
-  return prisma.performanceEvaluation.findMany({
+  const rows = await prisma.performanceEvaluation.findMany({
     where: { userId },
     orderBy: [{ year: 'desc' }, { month: 'desc' }],
   });
+  return rows.map(r => ({
+    id:               r.id,
+    userId:           r.userId,
+    month:            r.month,
+    year:             r.year,
+    strengthScore:    r.strengthScore,
+    cardioScore:      r.cardioScore,
+    flexibilityScore: r.flexibilityScore,
+    nutritionScore:   r.nutritionScore,
+    sleepScore:       r.sleepScore,
+    recoveryScore:    r.recoveryScore,
+    overallScore:     r.overallScore,
+    comments:         r.comments,
+    createdAt:        r.createdAt.toISOString(),
+    updatedAt:        r.updatedAt.toISOString(),
+  }));
 }
 
 export default async function PerformancePage() {
