@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import NeonAuthProvider from '@/components/providers/NeonAuthProvider';
 import AppShell from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <AppShell>{children}</AppShell>
+        <NeonAuthProvider>
+          <AppShell>{children}</AppShell>
+        </NeonAuthProvider>
       </body>
     </html>
   );

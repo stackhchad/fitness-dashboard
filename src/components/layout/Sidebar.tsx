@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuthUser } from '@neondatabase/neon-js/auth/react';
+import { authClient } from '@/lib/auth-client';
 import { useUIStore } from '@/store/useUIStore';
 
 const NAV = [
@@ -16,6 +18,7 @@ const NAV = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { sidebarOpen, toggleSidebar } = useUIStore();
+  const user = useAuthUser();
 
   return (
     <aside
@@ -49,6 +52,21 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      {/* User + Sign out */}
+      {user && (
+        <div className={`px-3 py-2 border-t border-gray-700 ${sidebarOpen ? '' : 'flex justify-center'}`}>
+          {sidebarOpen && (
+            <p className="text-xs text-gray-400 truncate mb-1">{user.primaryEmail}</p>
+          )}
+          <button
+            onClick={() => authClient.signOut()}
+            className="text-xs text-gray-400 hover:text-white transition-colors"
+          >
+            {sidebarOpen ? 'Sign out' : '↪'}
+          </button>
+        </div>
+      )}
 
       {/* Toggle button */}
       <button
