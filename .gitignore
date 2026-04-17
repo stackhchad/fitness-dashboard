@@ -1,6 +1,10 @@
 .env
+.env.bak
 .env.local
+.env.local.bak
 .next/
 node_modules/
 prisma/dev.db
+prisma/dev.db.bak
 prisma/dev.db-journal
+prisma/dev.db-journal.bak
