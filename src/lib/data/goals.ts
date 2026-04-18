@@ -4,7 +4,7 @@ import { calcGoalProgress, calcSchedulePct, calcGoalStatus } from '@/lib/utils';
 import { GoalWithProgress } from '@/types';
 
 export async function getGoalsWithProgress(): Promise<GoalWithProgress[]> {
-  const userId = getUserId();
+  const userId = await getUserId();
   const goals = await prisma.goal.findMany({ where: { userId }, orderBy: { createdAt: 'desc' } });
 
   return goals.map(g => {

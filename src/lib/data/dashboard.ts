@@ -4,7 +4,7 @@ import { calcBMI, calcGoalProgress, calcSchedulePct, calcGoalStatus } from '@/li
 import { startOfWeek, subWeeks, endOfWeek, eachWeekOfInterval, format } from 'date-fns';
 
 export async function getDashboardData() {
-  const userId = getUserId();
+  const userId = await getUserId();
   const now = new Date();
   const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
   const monthAgo = new Date(now); monthAgo.setMonth(monthAgo.getMonth() - 1);

@@ -4,7 +4,7 @@ import { getUserId } from '@/lib/auth';
 
 export async function GET() {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const data = await prisma.bodyMeasurement.findMany({
       where: { userId },
       orderBy: { date: 'desc' },
@@ -17,7 +17,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const body = await req.json();
     const entry = await prisma.bodyMeasurement.create({
       data: {

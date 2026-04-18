@@ -4,7 +4,7 @@ import { getUserId } from '@/lib/auth';
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const body = await req.json();
     const rec = await prisma.performanceEvaluation.findUnique({ where: { id: params.id } });
     if (!rec || rec.userId !== userId) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -38,7 +38,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const rec = await prisma.performanceEvaluation.findUnique({ where: { id: params.id } });
     if (!rec || rec.userId !== userId) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     await prisma.performanceEvaluation.delete({ where: { id: params.id } });

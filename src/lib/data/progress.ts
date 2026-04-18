@@ -4,7 +4,7 @@ import { startOfWeek, endOfWeek, subWeeks, eachWeekOfInterval, format } from 'da
 import { WeeklyProgress, PersonalRecord } from '@/types';
 
 export async function getWeeklyProgress(weeks = 12): Promise<WeeklyProgress[]> {
-  const userId = getUserId();
+  const userId = await getUserId();
   const now = new Date();
   const start = startOfWeek(subWeeks(now, weeks - 1), { weekStartsOn: 1 });
   const end = endOfWeek(now, { weekStartsOn: 1 });
@@ -49,7 +49,7 @@ export async function getWeeklyProgress(weeks = 12): Promise<WeeklyProgress[]> {
 }
 
 export async function getPersonalRecords(): Promise<PersonalRecord[]> {
-  const userId = getUserId();
+  const userId = await getUserId();
   const logs = await prisma.workoutLog.findMany({
     where: { userId, exercise: { not: null }, weightKg: { gt: 0 } },
     orderBy: { date: 'asc' },

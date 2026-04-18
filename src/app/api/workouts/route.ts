@@ -4,7 +4,7 @@ import { getUserId } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const { searchParams } = new URL(req.url);
     const from       = searchParams.get('from');
     const to         = searchParams.get('to');
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const body = await req.json();
     const entry = await prisma.workoutLog.create({
       data: {

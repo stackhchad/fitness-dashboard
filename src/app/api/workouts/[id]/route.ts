@@ -9,7 +9,7 @@ async function getOwned(id: string, userId: string) {
 }
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
-  const userId = getUserId();
+  const userId = await getUserId();
   const rec = await getOwned(params.id, userId);
   if (!rec) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json({ data: rec });
@@ -17,7 +17,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const rec = await getOwned(params.id, userId);
     if (!rec) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     const body = await req.json();
@@ -45,7 +45,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const userId = getUserId();
+    const userId = await getUserId();
     const rec = await getOwned(params.id, userId);
     if (!rec) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     await prisma.workoutLog.delete({ where: { id: params.id } });
