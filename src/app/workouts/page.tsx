@@ -4,7 +4,7 @@ import { getUserId } from '@/lib/auth';
 import WorkoutPageClient from '@/components/workouts/WorkoutPageClient';
 
 async function getWorkouts() {
-  const userId = getUserId();
+  const userId = await getUserId();
   return prisma.workoutLog.findMany({
     where: { userId },
     orderBy: { date: 'desc' },

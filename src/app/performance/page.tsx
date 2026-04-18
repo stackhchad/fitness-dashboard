@@ -5,7 +5,7 @@ import { PerformanceEvaluation } from '@/types';
 import PerformancePageClient from '@/components/performance/PerformancePageClient';
 
 async function getEvaluations(): Promise<PerformanceEvaluation[]> {
-  const userId = getUserId();
+  const userId = await getUserId();
   const rows = await prisma.performanceEvaluation.findMany({
     where: { userId },
     orderBy: [{ year: 'desc' }, { month: 'desc' }],

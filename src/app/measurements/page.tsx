@@ -5,7 +5,7 @@ import { calcBMI } from '@/lib/utils';
 import MeasurementsPageClient from '@/components/measurements/MeasurementsPageClient';
 
 async function getMeasurements() {
-  const userId = getUserId();
+  const userId = await getUserId();
   const rows = await prisma.bodyMeasurement.findMany({
     where: { userId },
     orderBy: { date: 'desc' },
